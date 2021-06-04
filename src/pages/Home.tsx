@@ -14,6 +14,7 @@ import Genres from "../components/Genres/Genres";
 import Rating from "../components/Rating/Rating";
 import Backdrop from "../components/Backdrop/Backdrop";
 import {
+  BACKDROP_HEIGHT,
   EMPTY_ITEM_SIZE,
   ITEM_SIZE,
   ITouchesRange,
@@ -51,7 +52,7 @@ const Home: React.FC = () => {
 
   const getContentScroll = async (e: any) => {
     const swiper = await e.target.getSwiper();
-    console.log("swiper: ", swiper.touches);
+    // console.log("swiper: ", swiper.touches);
     setScrollX(swiper.touches);
     // setTranslateX(swiper.translate);
   };
@@ -75,7 +76,9 @@ const Home: React.FC = () => {
         {movies.length !== 0 && (
           <>
             <Backdrop movies={movies} translateX={translateX} />
-            <div className="SlidesContainer">
+            <div
+              className="SlidesContainer"
+            >
               <IonSlides
                 className="AnimatedSlides"
                 options={slideOpts}

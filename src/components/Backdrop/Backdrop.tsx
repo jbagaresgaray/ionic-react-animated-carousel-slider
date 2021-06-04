@@ -41,7 +41,6 @@ const Backdrop: React.FC<Props> = ({ movies, translateX, scrollX }) => {
             //   const translateX = scrollX.interpolate({
             //     inputRange: [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE],
             //     outputRange: [0, width],
-            //     // extrapolate:'clamp'
             //   });
 
             if (item.backdrop) {

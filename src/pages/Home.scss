@@ -16,9 +16,21 @@
     // ion-slide {
     //     width: 300px !important;
     // }
+    .swiper-slide {
+        .movie-slide {
+            transform: translateY(100px);
+        }
+    }
+    .swiper-slide-active {
+        .movie-slide {
+            transform: translateY(52px) !important;
+        }
+    }
     .slide {
         h2 {
             font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 0;
         }
         p {
             font-size: 12px;
