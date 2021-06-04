@@ -1,0 +1,13 @@
+.rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    .ratingNumber {
+        margin-right: 4px;
+        font-size: 14px !important;
+        font-weight: 600;
+    }
+}

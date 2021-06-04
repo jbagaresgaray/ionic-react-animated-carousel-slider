@@ -1,0 +1,21 @@
+.genres {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    .genre {
+        padding: 2px 6px;
+        border: 1px solid #ccc;
+        border-radius: 14px;
+        margin-right: 4px;
+        margin-left: 4px;
+    }
+    .genreText {
+        font-size: 9px !important;
+        opacity: 0.4;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}

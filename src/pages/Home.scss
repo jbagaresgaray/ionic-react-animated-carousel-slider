@@ -1,0 +1,32 @@
+.HomePage {
+    ion-content {
+        position: relative;
+    }
+}
+
+.SlidesContainer {
+    position: absolute;
+    bottom: calc(0px + var(--ion-safe-area-bottom));
+    z-index: 15;
+    left: 0;
+    right: 0;
+}
+
+.AnimatedSlides {
+    // ion-slide {
+    //     width: 300px !important;
+    // }
+    .slide {
+        h2 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    }
+}
