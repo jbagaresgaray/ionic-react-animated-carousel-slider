@@ -1,0 +1,7 @@
+{
+  "name": "ionic-animated-carousel-slider",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
