@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ionic-animated-carousel-slider",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
