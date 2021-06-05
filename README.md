@@ -3,6 +3,9 @@
 
 # Inspiration
 
+### Youtube URL
+
+[![Ionic React Movies 2.0](app.gif)](https://www.youtube.com/watch?v=TAGyxWssyVA)
 
 [![Ionic React Movies 2.0](sample.gif)](https://github.com/jbagaresgaray/ionic-react-animated-carousel-slider)
 
@@ -27,6 +30,7 @@ You can find me on:
 
 - Github: http://github.com/jbagaresgaray
 - Twitter: http://twitter.com/Janphil17
+- Website: https://jbagaresgaray.github.io/
 
 Wanna give me a coffee?
 

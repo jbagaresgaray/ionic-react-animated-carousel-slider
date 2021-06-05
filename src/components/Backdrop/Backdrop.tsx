@@ -67,7 +67,7 @@ const Backdrop: React.FC<Props> = ({ movies, slider1 }) => {
         }}
       >
         {movies &&
-          movies.reverse().map((item, index) => {
+          movies.map((item, index) => {
             if (item.backdrop) {
               return (
                 <SwiperSlide

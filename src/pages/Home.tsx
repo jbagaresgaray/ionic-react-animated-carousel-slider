@@ -80,7 +80,7 @@ const Home: React.FC = () => {
                   slideShadows: false,
                 }}
               >
-                {movies.reverse().map((item, index) => {
+                {movies.map((item, index) => {
                   if (!item.poster) {
                     return (
                       <div
