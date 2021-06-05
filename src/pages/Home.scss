@@ -2,11 +2,22 @@
     ion-content {
         position: relative;
     }
+    .loading-view {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        ion-spinner {
+            width: 36px;
+            height: 36px;
+        }
+    }
 }
 
 .SlidesContainer {
     position: absolute;
-    bottom: calc(58px + var(--ion-safe-area-bottom));
+    bottom: calc(0px + var(--ion-safe-area-bottom));
     // top: calc(0px + var(--ion-safe-area-top));
     z-index: 15;
     left: 0;

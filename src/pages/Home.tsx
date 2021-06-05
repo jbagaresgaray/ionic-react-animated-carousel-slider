@@ -5,21 +5,15 @@ import {
   IonToolbar,
   IonButton,
 } from "@ionic/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.scss";
 import { getMovies } from "../utils/api";
 import AppLoading from "../components/AppLoading/AppLoading";
 import Genres from "../components/Genres/Genres";
 import Rating from "../components/Rating/Rating";
 import Backdrop from "../components/Backdrop/Backdrop";
-import {
-  EMPTY_ITEM_SIZE,
-  ITEM_SIZE,
-  ITouchesRange,
-  SPACING,
-} from "../utils/config";
+import { EMPTY_ITEM_SIZE, ITEM_SIZE, SPACING } from "../utils/config";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { setTimeout } from "timers";
 
 const Home: React.FC = () => {
   const [movies, setMovies] = useState<any[]>([]);
@@ -86,69 +80,56 @@ const Home: React.FC = () => {
                   slideShadows: false,
                 }}
               >
-                {movies &&
-                  movies.map((item, index) => {
-                    const inputRange = [
-                      (index - 2) * ITEM_SIZE,
-                      (index - 1) * ITEM_SIZE,
-                      index * ITEM_SIZE,
-                    ];
+                {movies.reverse().map((item, index) => {
+                  if (!item.poster) {
+                    return (
+                      <div
+                        key={index + "-movies"}
+                        style={{ width: EMPTY_ITEM_SIZE }}
+                      />
+                    );
+                  }
 
-                    // console.log("inputRange: ", inputRange);
-
-                    // const translateY = scrollX({
-                    //   inputRange,
-                    //   outputRange: [100, 50, 100],
-                    //   extrapolate: 'clamp',
-                    // });
-
-                    if (!item.poster) {
-                      return (
-                        <div key={index} style={{ width: EMPTY_ITEM_SIZE }} />
-                      );
-                    }
-
-                    if (item.poster) {
-                      return (
-                        <SwiperSlide key={index}>
-                          <div
-                            className="movie-slide"
-                            style={styles.movieSlides}
-                          >
-                            <img
-                              alt="alt-img"
-                              src={item.poster}
-                              style={styles.posterImage}
-                            />
-                            <div className="slide">
-                              <h2>{item.title}</h2>
-                              {item.rating && <Rating rating={item.rating} />}
-                              {item.genres && <Genres genres={item.genres} />}
-                              <p>{item.description}</p>
-                            </div>
+                  if (item.poster) {
+                    return (
+                      <SwiperSlide key={item.key + "-movies"}>
+                        <div className="movie-slide" style={styles.movieSlides}>
+                          <img
+                            alt="alt-img"
+                            src={item.poster}
+                            style={styles.posterImage}
+                          />
+                          <div className="slide">
+                            <h2>{item.title}</h2>
+                            {item.rating && <Rating rating={item.rating} />}
+                            {item.genres && <Genres genres={item.genres} />}
+                            <p>{item.description}</p>
                           </div>
-                        </SwiperSlide>
-                      );
-                    }
-                  })}
+                        </div>
+                      </SwiperSlide>
+                    );
+                  }
+                })}
               </Swiper>
             </div>
           </>
         )}
       </IonContent>
-      <IonFooter className="ion-no-border">
-        <IonToolbar className="ion-text-center">
-          <IonButton
-            color="dark"
-            style={{
-              width: `${ITEM_SIZE}px`,
-              margin: `0 auto`,
-            }}
-          >
-            Buy Ticket
-          </IonButton>
-        </IonToolbar>
-      </IonFooter>
+      {movies.length !== 0 && (
+        <IonFooter className="ion-no-border">
+          <IonToolbar className="ion-text-center">
+            <IonButton
+              color="dark"
+              style={{
+                width: `${ITEM_SIZE}px`,
+                margin: `0 auto`,
+              }}
+            >
+              Buy Ticket
+            </IonButton>
+          </IonToolbar>
+        </IonFooter>
+      )}
     </IonPage>
   );
 };

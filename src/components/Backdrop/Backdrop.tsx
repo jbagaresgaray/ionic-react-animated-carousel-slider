@@ -29,13 +29,13 @@ const Backdrop: React.FC<Props> = ({ movies, slider1 }) => {
       <Swiper
         className="BackdropSlides"
         initialSlide={0}
-        // dir={"rtl"}
+        dir={"rtl"}
         watchSlidesProgress
         style={{ height: BACKDROP_HEIGHT }}
         parallax={true}
         onSwiper={(swiper) => {
           setSlider2(swiper);
-          const interleaveOffset = 0.5;
+          const interleaveOffset = -0.5;
           swiper.on("progress", function () {
             for (let i = 0; i < swiper.slides.length; i++) {
               const $slideEl: any = swiper.slides[i];
@@ -45,6 +45,9 @@ const Backdrop: React.FC<Props> = ({ movies, slider1 }) => {
 
               $slideEl.querySelector(".slide-image").style.transform =
                 "translateX(" + innerTranslate + "px)";
+
+              // $slideEl.querySelector(".slide-image").style.transform =
+              //   "translate3d(" + innerTranslate + "px, 0, 0)";
             }
           });
           swiper.on("touchStart", function () {
@@ -64,16 +67,11 @@ const Backdrop: React.FC<Props> = ({ movies, slider1 }) => {
         }}
       >
         {movies &&
-          movies.map((item, index) => {
-            //   const translateX = scrollX.interpolate({
-            //     inputRange: [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE],
-            //     outputRange: [0, width],
-            //   });
-
+          movies.reverse().map((item, index) => {
             if (item.backdrop) {
               return (
                 <SwiperSlide
-                  key={index}
+                  key={item.key + "-backdrop"}
                   style={{
                     alignItems: "flex-start",
                     height,

@@ -3,13 +3,11 @@
 
 # Inspiration
 
-### Youtube tutorial
-
 
 [![Ionic React Movies 2.0](sample.gif)](https://github.com/jbagaresgaray/ionic-react-animated-carousel-slider)
 
 
-I decided to make an Ionic React version from the React Native version of Tutorial app
+I decided to make an Ionic React version from the React Native version of Movies 2.0 app
 
 - GitHub: https://github.com/catalinmiron/react-native-movie-2.0-carousel
 
