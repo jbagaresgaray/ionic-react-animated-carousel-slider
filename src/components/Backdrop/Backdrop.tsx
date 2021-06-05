@@ -1,43 +1,70 @@
-import { IonSlides, IonSlide, IonImg } from "@ionic/react";
-import { useEffect, useRef } from "react";
-import { BACKDROP_HEIGHT, ITEM_SIZE, ITouchesRange } from "../../utils/config";
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { BACKDROP_HEIGHT } from "../../utils/config";
 import "./Backdrop.scss";
 
 interface Props {
   movies: any[];
   index?: number;
   translateX?: number;
-  scrollX?: ITouchesRange;
+  slider1?: any;
 }
 
-const Backdrop: React.FC<Props> = ({ movies, translateX, scrollX }) => {
-  const slideOpts = {
-    initialSlide: 1,
-  };
-  const slider: any = useRef(null);
+const Backdrop: React.FC<Props> = ({ movies, slider1 }) => {
+  const [slider2, setSlider2] = useState<any>(null);
   const width = window.innerWidth;
   const height = window.innerHeight;
 
   useEffect(() => {
-    const slideTo = async () => {
-      const swiper = await slider.current.getSwiper();
-    //   console.log("scrollX: ", scrollX);
-    //   swiper.setTranslate(translateX);
-    };
-
-    slideTo();
-  }, [scrollX]);
+    if (slider1) {
+      slider1.controller.control = slider2;
+    }
+    if (slider2) {
+      slider2.controller.control = slider1;
+    }
+  }, [slider1, slider2]);
 
   return (
     <div style={{ height: "100%", width, position: "absolute" }}>
-      <IonSlides
+      <Swiper
         className="BackdropSlides"
+        initialSlide={0}
+        // dir={"rtl"}
+        watchSlidesProgress
         style={{ height: BACKDROP_HEIGHT }}
-        options={slideOpts}
-        ref={slider}
+        parallax={true}
+        onSwiper={(swiper) => {
+          setSlider2(swiper);
+          const interleaveOffset = 0.5;
+          swiper.on("progress", function () {
+            for (let i = 0; i < swiper.slides.length; i++) {
+              const $slideEl: any = swiper.slides[i];
+              let slideProgress = $slideEl.progress,
+                innerOffset = swiper.width * interleaveOffset,
+                innerTranslate = slideProgress * innerOffset;
+
+              $slideEl.querySelector(".slide-image").style.transform =
+                "translateX(" + innerTranslate + "px)";
+            }
+          });
+          swiper.on("touchStart", function () {
+            for (let i = 0; i < swiper.slides.length; i++) {
+              const $slideEl: any = swiper.slides[i];
+              $slideEl.style.transition = "";
+            }
+          });
+          swiper.on("setTransition", function (speed) {
+            for (let i = 0; i < swiper.slides.length; i++) {
+              const $slideEl: any = swiper.slides[i];
+              $slideEl.style.transition = speed + "ms";
+              $slideEl.querySelector(".slide-image").style.transition =
+                speed + "ms";
+            }
+          });
+        }}
       >
         {movies &&
-          movies.reverse().map((item, index) => {
+          movies.map((item, index) => {
             //   const translateX = scrollX.interpolate({
             //     inputRange: [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE],
             //     outputRange: [0, width],
@@ -45,7 +72,7 @@ const Backdrop: React.FC<Props> = ({ movies, translateX, scrollX }) => {
 
             if (item.backdrop) {
               return (
-                <IonSlide
+                <SwiperSlide
                   key={index}
                   style={{
                     alignItems: "flex-start",
@@ -55,6 +82,7 @@ const Backdrop: React.FC<Props> = ({ movies, translateX, scrollX }) => {
                 >
                   <img
                     alt="alt-img"
+                    className="slide-image"
                     src={item.backdrop}
                     style={{
                       width,
@@ -62,12 +90,12 @@ const Backdrop: React.FC<Props> = ({ movies, translateX, scrollX }) => {
                       objectFit: "cover",
                     }}
                   />
-                </IonSlide>
+                </SwiperSlide>
               );
             }
           })}
-      </IonSlides>
-      <div className="show_bg_2" style={{ height: BACKDROP_HEIGHT, }} />
+      </Swiper>
+      <div className="show_bg_2" style={{ height: BACKDROP_HEIGHT }} />
     </div>
   );
 };

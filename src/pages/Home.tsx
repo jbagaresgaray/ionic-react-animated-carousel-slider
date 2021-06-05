@@ -1,10 +1,9 @@
 import {
   IonContent,
-  IonHeader,
   IonPage,
-  IonSlides,
-  IonSlide,
-  IonImg,
+  IonFooter,
+  IonToolbar,
+  IonButton,
 } from "@ionic/react";
 import React, { useEffect, useRef, useState } from "react";
 import "./Home.scss";
@@ -14,48 +13,33 @@ import Genres from "../components/Genres/Genres";
 import Rating from "../components/Rating/Rating";
 import Backdrop from "../components/Backdrop/Backdrop";
 import {
-  BACKDROP_HEIGHT,
   EMPTY_ITEM_SIZE,
   ITEM_SIZE,
   ITouchesRange,
   SPACING,
 } from "../utils/config";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { setTimeout } from "timers";
 
 const Home: React.FC = () => {
-  const slideOpts = {
-    initialSlide: 0,
-    spaceBetween: -80,
-    centeredSlides: true,
-  };
-  const [activeIndex, setActiveIndex] = useState<number>(0);
   const [movies, setMovies] = useState<any[]>([]);
-  const [translateX, setTranslateX] = useState<any>(null);
-  const [scrollX, setScrollX] = useState<ITouchesRange>({
-    currentX: 0,
-    currentY: 0,
-    diff: 0,
-    startX: 0,
-    startY: 0,
-  });
-  const slider: any = useRef(null);
+  const [slider1, setSlider1] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const movies = await getMovies();
       setMovies([{ key: "empty-left" }, ...movies, { key: "empty-right" }]);
+
+      if (slider1) {
+        slider1.update();
+        slider1.updateSlides();
+      }
     };
 
     if (movies.length === 0) {
       fetchData();
     }
-  }, [movies]);
-
-  const getContentScroll = async (e: any) => {
-    const swiper = await e.target.getSwiper();
-    // console.log("swiper: ", swiper.touches);
-    setScrollX(swiper.touches);
-    // setTranslateX(swiper.translate);
-  };
+  }, [movies, slider1]);
 
   const styles: any = {
     posterImage: {
@@ -66,24 +50,41 @@ const Home: React.FC = () => {
       margin: 0,
       marginBottom: "10px",
     },
+    movieSlides: {
+      width: `${ITEM_SIZE}px`,
+      marginLeft: `${SPACING}px`,
+      marginRight: `${SPACING}px`,
+      padding: `calc(${SPACING}px * 2)`,
+    },
   };
 
   return (
     <IonPage className="HomePage">
-      <IonContent fullscreen>
+      <IonContent fullscreen scrollY={false}>
         {movies.length === 0 && <AppLoading />}
 
         {movies.length !== 0 && (
           <>
-            <Backdrop movies={movies} translateX={translateX} />
-            <div
-              className="SlidesContainer"
-            >
-              <IonSlides
+            <Backdrop movies={movies} slider1={slider1} />
+            <div className="SlidesContainer">
+              <Swiper
                 className="AnimatedSlides"
-                options={slideOpts}
-                onIonSlideDrag={getContentScroll}
-                ref={slider}
+                initialSlide={0}
+                slidesPerView={1.25}
+                spaceBetween={40}
+                centeredSlides={true}
+                watchSlidesProgress={true}
+                onSwiper={(swiper) => {
+                  setSlider1(swiper);
+                }}
+                effect={"coverflow"}
+                coverflowEffect={{
+                  rotate: 0,
+                  stretch: 0,
+                  depth: 150,
+                  modifier: 2,
+                  slideShadows: false,
+                }}
               >
                 {movies &&
                   movies.map((item, index) => {
@@ -93,7 +94,7 @@ const Home: React.FC = () => {
                       index * ITEM_SIZE,
                     ];
 
-                    console.log("inputRange: ", inputRange);
+                    // console.log("inputRange: ", inputRange);
 
                     // const translateY = scrollX({
                     //   inputRange,
@@ -101,21 +102,18 @@ const Home: React.FC = () => {
                     //   extrapolate: 'clamp',
                     // });
 
+                    if (!item.poster) {
+                      return (
+                        <div key={index} style={{ width: EMPTY_ITEM_SIZE }} />
+                      );
+                    }
+
                     if (item.poster) {
                       return (
-                        <IonSlide key={index}>
+                        <SwiperSlide key={index}>
                           <div
                             className="movie-slide"
-                            style={{
-                              width: `${ITEM_SIZE}px`,
-                              marginLeft: `${SPACING}px`,
-                              marginRight: `${SPACING}px`,
-                              padding: `calc(${SPACING}px * 2)`,
-                              backgroundColor: "#fff",
-                              borderRadius: "34px",
-                              alignItems: "center",
-                              flexDirection: "column",
-                            }}
+                            style={styles.movieSlides}
                           >
                             <img
                               alt="alt-img"
@@ -129,15 +127,28 @@ const Home: React.FC = () => {
                               <p>{item.description}</p>
                             </div>
                           </div>
-                        </IonSlide>
+                        </SwiperSlide>
                       );
                     }
                   })}
-              </IonSlides>
+              </Swiper>
             </div>
           </>
         )}
       </IonContent>
+      <IonFooter className="ion-no-border">
+        <IonToolbar className="ion-text-center">
+          <IonButton
+            color="dark"
+            style={{
+              width: `${ITEM_SIZE}px`,
+              margin: `0 auto`,
+            }}
+          >
+            Buy Ticket
+          </IonButton>
+        </IonToolbar>
+      </IonFooter>
     </IonPage>
   );
 };

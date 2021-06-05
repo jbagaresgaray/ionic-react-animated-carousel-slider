@@ -6,31 +6,34 @@
 
 .SlidesContainer {
     position: absolute;
-    bottom: calc(0px + var(--ion-safe-area-bottom));
+    bottom: calc(58px + var(--ion-safe-area-bottom));
+    // top: calc(0px + var(--ion-safe-area-top));
     z-index: 15;
     left: 0;
     right: 0;
+    // height: 100%;
 }
 
 .AnimatedSlides {
-    // ion-slide {
-    //     width: 300px !important;
-    // }
-    .swiper-slide {
-        .movie-slide {
-            transform: translateY(100px);
-        }
+    height: 100%;
+    .movie-slide {
+        background-color: #fff;
+        border-radius: 34px;
+        align-items: center;
+        flex-direction: column;
     }
-    .swiper-slide-active {
-        .movie-slide {
-            transform: translateY(52px) !important;
-        }
+    .swiper-slide {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
     }
     .slide {
         h2 {
             font-size: 24px;
             margin-top: 0;
             margin-bottom: 0;
+            text-align: center;
         }
         p {
             font-size: 12px;
