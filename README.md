@@ -5,7 +5,8 @@
 
 ### Youtube tutorial
 
-[![Movies 2.0](https://cdn.dribbble.com/users/1588664/screenshots/8257559/media/d94b36cb7822008df8055c90ca6e2238.mp4)](https://cdn.dribbble.com/users/1588664/screenshots/8257559/media/d94b36cb7822008df8055c90ca6e2238.mp4)
+
+[![Ionic React Movies 2.0](sample.gif)](https://github.com/jbagaresgaray/ionic-react-animated-carousel-slider)
 
 
 I decided to make an Ionic React version from the React Native version of Tutorial app
