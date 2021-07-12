@@ -11,6 +11,10 @@
 
 [![Ionic React Movies 2.0](sample.gif)](https://github.com/jbagaresgaray/ionic-react-animated-carousel-slider)
 
+## Demo URL
+
+[https://codesandbox.io/s/ionic-react-animated-carousel-slider-ke99b](https://codesandbox.io/s/ionic-react-animated-carousel-slider-ke99b)
+
 
 I decided to make an Ionic React version from the React Native version of Movies 2.0 app by 
 
